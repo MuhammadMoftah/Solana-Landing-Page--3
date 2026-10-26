@@ -1,0 +1,78 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import media from '../../content/solana-east.media.js';
+import { getSection, splitTail, pad2 } from '../../lib/content.js';
+
+const { content } = getSection('hero');
+const image = media.villaPool4;
+const { lead, tail } = splitTail(content.heading, 2);
+---
+
+<section id="top" class="relative isolate overflow-hidden pt-[4.5rem]" aria-labelledby="hero-title">
+  <!-- Decorative giant word behind the composition (reference: "PORTFOLIO"). -->
+  <p
+    class="ghost-word animate-drift pointer-events-none absolute top-[3.5rem] left-1/2 -z-10 -translate-x-1/2 text-[clamp(8.5rem,29vw,28rem)]"
+    aria-hidden="true"
+  >
+    Solana
+  </p>
+
+  <div class="container-x relative grid items-center gap-x-8 gap-y-6 pt-10 pb-16 lg:min-h-[min(46rem,calc(100svh-4.5rem))] lg:grid-cols-12 lg:pt-12 lg:pb-24">
+    <div class="animate-settle relative z-10 lg:col-span-6 xl:col-span-6">
+      <p class="script">Discover</p>
+      <p class="eyebrow mt-3">{content.eyebrow}</p>
+      <h1 id="hero-title" class="display-1 mt-5 text-[clamp(3rem,1.3rem+6vw,6.75rem)]">
+        {lead}{' '}
+        <span class="t-red">{tail}<span aria-hidden="true">.</span></span>
+      </h1>
+      <p class="lead mt-7 max-w-[30rem]">{content.description}</p>
+      <div class="mt-9 flex flex-wrap items-center gap-x-8 gap-y-5">
+        <a href={content.primaryCta.target} class="btn btn-solid">
+          {content.primaryCta.label}
+          <Icon name="arrow-ne" class="btn-arrow" />
+        </a>
+        <a href={content.secondaryCta.target} class="link-underline pb-1 text-[0.6875rem] font-semibold tracking-[0.2em] text-bone-50 uppercase">
+          {content.secondaryCta.label}
+        </a>
+      </div>
+    </div>
+
+    <div class="relative mx-auto mt-6 w-full max-w-[30rem] lg:col-span-6 lg:mt-0 lg:ml-auto lg:max-w-[36rem] xl:max-w-[38rem]">
+      <div class="relative aspect-[4/5]">
+        <span
+          class="animate-pop absolute top-[16%] -right-[6%] aspect-square w-[78%] rounded-full bg-crimson-600 max-sm:right-[-3%]"
+          aria-hidden="true"
+        ></span>
+        <div class="shape-arch-organic absolute inset-y-0 left-[4%] w-[88%] overflow-hidden bg-ink-850">
+          <Picture
+            src={image.src}
+            alt={image.alt}
+            formats={['avif', 'webp']}
+            widths={[480, 640, 800, 1000, 1280]}
+            sizes="(min-width: 64rem) 34rem, 88vw"
+            quality={58}
+            priority
+            class="media-fill animate-unveil object-[42%_62%]"
+            pictureAttributes={{ class: 'contents' }}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-transparent opacity-90" aria-hidden="true"></div>
+        </div>
+        <p class="label absolute right-0 bottom-3 z-10 bg-ink-900/70 px-3 py-1.5 backdrop-blur-sm">Illustrative render</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-top relative border-t">
+    <ul class="container-x grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      {
+        content.highlights.map((item: string, index: number) => (
+          <li class="flex items-start gap-4 py-5 sm:px-6 sm:first:pl-0 sm:last:pr-0">
+            <span class="numeral text-[1.5rem]">{pad2(index)}</span>
+            <span class="meta pt-1 text-ash-300">{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
